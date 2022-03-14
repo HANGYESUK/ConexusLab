@@ -2,16 +2,50 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import { combineReducers, createStore } from 'redux';
+
+// 라디오버튼 내용
+let isradio = "";
+
+function radioReducer(state=isradio, action) {
+
+  if(action.type === "라디오 추가") {
+    console.log(action.isradio)
+    isradio = action.isradio
+    return state
+  }
+  else {
+    console.log(isradio)
+    return state
+  }
+}
+
+// 체크박스 내용
+let checkedItems = [];
+
+function checkReducer(state=checkedItems, action) {
+
+  if(action.type === "체크추가") {
+    console.log(action.checkedItems)
+    checkedItems = action.checkedItems
+    return state
+  }
+  else {
+    return state
+  }
+
+}
+
+let store = createStore(combineReducers({radioReducer, checkReducer}));
+
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

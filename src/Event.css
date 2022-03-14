@@ -1,0 +1,16 @@
+.low {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.colum {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.eventContainer {
+    width: 100%;
+    justify-content: center;
+}

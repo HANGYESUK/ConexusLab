@@ -1,0 +1,28 @@
+.checkContainer {
+    width: 100%;
+    height: 40px;
+    background-color: black;
+    color: white;
+    margin: 10px;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.radioContainer {
+    width: 100%;
+    height: 40px;
+    background-color: black;
+    color: white;
+    margin: 10px;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.questionContainer {
+    width: 80%;
+    padding: 10px;
+}
