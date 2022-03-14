@@ -13,12 +13,11 @@ function radioReducer(state=isradio, action) {
   if(action.type === "라디오 추가") {
     console.log(action.isradio)
     isradio = action.isradio
-    return state
   }
   else {
     console.log(isradio)
-    return state
   }
+  return isradio
 }
 
 // 체크박스 내용
@@ -32,7 +31,7 @@ function checkReducer(state=checkedItems, action) {
     return state
   }
   else {
-    return state
+    return checkedItems
   }
 
 }

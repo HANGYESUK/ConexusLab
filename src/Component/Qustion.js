@@ -40,7 +40,6 @@ function Radio(props) {
                             <input type="radio" key={i} value={item} name="radio" onChange={
                                 (e)=>{ 
                                     dispatch({type : "라디오 추가", isradio : e.target.value})
-                                    console.log("라디오추가 : ", state)
                                 }
                             }></input>
                             {item}
