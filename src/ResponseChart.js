@@ -4,25 +4,42 @@ import survey from './survey';
 import './ResponseChart.css';
 
 function ResponseChart(props) {
-    
-    
-    //라디오 개수
-    let radio = [0,0,0,0,0];
 
-    //체크 개수
-    let check = [0,0,0,0,0];
-
-    //라디오 퍼센트지
-    let radioPercent = [0,0,0,0,0]
-
-    //체크박스 퍼센트지
-    let checkPercent = [0,0,0,0,0]
-
+    // 설문조사 리스트 데이터
     let surveyData = survey.payload;
 
-    console.log(surveyData)
-
+    // 설문조사 완료 데이터
     let state = useSelector((state) => state.surveyReducer);
+
+
+    //라디오 개수
+    let radio = [];
+    radio.length = surveyData.blocks[0].option.items.length;
+    NumAssignment(radio)
+
+    //체크 개수
+    let check = [];
+    check.length = surveyData.blocks[1].option.items.length;
+    NumAssignment(check)
+
+    //라디오 퍼센트지
+    let radioPercent = []
+    radioPercent.length = radio.length
+    NumAssignment(radioPercent)
+
+    //체크박스 퍼센트지
+    let checkPercent = [] 
+    checkPercent.length = check.length
+    NumAssignment(checkPercent)
+
+
+    //배열에 number 할당
+    function NumAssignment(item) {
+        for(let i=0; i<item.length; i++) {
+            item[i] = 0;
+        }
+    }
+    
 
     //라디오 항목 갯수
     function countRadio() {
@@ -198,7 +215,7 @@ function Radio(props) {
             <div className='chart2' style={chart2}>
             </div>
             <div className='chart2Box'>
-                <p>{props.radioPercent}</p>
+                <p>{props.radioPercent}%</p>
                 <p>{quest}</p>
                 <p>{props.radio}</p>
             </div>
@@ -221,7 +238,7 @@ function Checkbox(props) {
             <div className='chart2' style={chart2}>
             </div>
             <div className='chart2Box'>
-                <p>{props.checkPercent}</p>
+                <p>{props.checkPercent}%</p>
                 <h2>{quest}</h2>
                 <p>{props.check}</p>
             </div>

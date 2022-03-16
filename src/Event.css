@@ -25,3 +25,11 @@
     border-radius: 10px;
     cursor: pointer;
 }
+
+.checked {
+    border: 10px solid #3887ff;
+}
+
+input {
+    visibility: hidden;
+}

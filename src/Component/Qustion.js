@@ -30,6 +30,20 @@ function Radio(props) {
 
     let dispatch = useDispatch();
 
+    //라디오버튼 체크 여부 확인
+    function checked() {
+        let check = document.querySelectorAll('input[name="radio"]')
+        console.log(check[0])
+        for(let i=0; i<check.length; i++) {
+            if(check[i].checked == true) {
+                check[i].parentElement.classList.add('checked')
+            }
+            else {
+                check[i].parentElement.classList.remove('checked')
+            }
+        }
+    }
+
 
     return (
         <>
@@ -41,6 +55,7 @@ function Radio(props) {
                                 <input type="radio" key={i} value={item} name="radio" onChange={
                                     (e)=>{ 
                                         dispatch({type : "라디오 추가", isradio : e.target.value})
+                                        checked()
                                     }
                                 }></input>
                                 {item}
@@ -93,6 +108,7 @@ function Checkbox(props) {
                                 checkHandler(e.currentTarget)
                                 dispatch({type : "체크추가", checkedItems : checkedItems})
                                 console.log("체크추가 : ", state)
+                                e.currentTarget.parentElement.classList.toggle('checked')
                             }
                         }></input>
                         <p>{item}</p>
