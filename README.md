@@ -1,8 +1,9 @@
 # ConexusLab 과제전형
-- 컴포넌트 나누어 생성(App -> Event -> Question -> Radio, Checkbox)
-- 라디오버튼과 체크버튼을 누르면 redux로 state전송
-- '보내기'버튼을 누르면 redux로 완료된 설문 데이터(radio: string, check[i], string - 체크박스는 배열)를 로컬스토리지에 추가하고 설문완료 페이지로 변경
-- 응답 완료후 설문완료 페이지 제작
+- 설문 페이지 제작
+  - 컴포넌트 나누어 생성(App -> Event -> Question -> Radio, Checkbox)
+  - 라디오버튼과 체크버튼을 누르면 redux로 state전송
+  - '보내기'버튼을 누르면 redux로 완료된 설문 데이터(radio: string, check[i], string - 체크박스는 배열)를 로컬스토리지에 추가하고 설문완료 페이지로 변경
+  - 응답 완료후 설문완료 페이지 제작
 
 - 응답자 조회 페이지 제작
   - 응답자 통계 데이터 가공(value(object형태)의 키값이 string인 예외처리, value값이 비워져 있을때 예외처리, 설문 항목의 갯수보다 클때 예외처리)
