@@ -36,14 +36,16 @@ function Radio(props) {
             {
                 props.qustion.items.map((item, i)=>{
                     return (
-                        <div className='radioContainer low'>
-                            <input type="radio" key={i} value={item} name="radio" onChange={
-                                (e)=>{ 
-                                    dispatch({type : "라디오 추가", isradio : e.target.value})
-                                }
-                            }></input>
-                            {item}
-                        </div>
+                        <label>
+                            <div className='radioContainer low'>
+                                <input type="radio" key={i} value={item} name="radio" onChange={
+                                    (e)=>{ 
+                                        dispatch({type : "라디오 추가", isradio : e.target.value})
+                                    }
+                                }></input>
+                                {item}
+                            </div>
+                        </label>
                     )
                 })
             }
@@ -84,16 +86,18 @@ function Checkbox(props) {
     return(
         props.qustion.items.map((item, i)=>{
             return (
-                <div className='checkContainer low'>
-                    <input type="checkbox" key={i} value={item} onChange={
-                        (e)=>{
-                            checkHandler(e.currentTarget)
-                            dispatch({type : "체크추가", checkedItems : checkedItems})
-                            console.log("체크추가 : ", state)
-                        }
-                    }></input>
-                    <p>{item}</p>
-                </div>
+                <label>
+                    <div className='checkContainer low'>
+                        <input type="checkbox" key={i} value={item} onChange={
+                            (e)=>{
+                                checkHandler(e.currentTarget)
+                                dispatch({type : "체크추가", checkedItems : checkedItems})
+                                console.log("체크추가 : ", state)
+                            }
+                        }></input>
+                        <p>{item}</p>
+                    </div>
+                </label>
             )
         })
     )

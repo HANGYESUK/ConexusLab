@@ -12,7 +12,7 @@ function Event(props) {
     let dispatch = useDispatch();
 
     //설문 데이터
-    let surveyData = Survey
+    const surveyData = Survey
     
 
   return (
@@ -38,12 +38,18 @@ function Event(props) {
             })
         }
         <button type='submit' onClick={()=>{
-            window.localStorage.setItem("test", "Hello World");
+            let copy = [...state.checkReducer]
             console.log("보내기 버튼 : ", state)
-        }}>보내기</button>
+            window.localStorage.setItem("radio", state.radioReducer);
+            for(let i=0; i<copy.length; i++) {
+                window.localStorage.setItem(`check${i}`,  copy[i]);
+            }
+            window.location.href = "/success"
+        }} className="subBtn">보내기</button>
     </div>
   )
 }
+
 
 export default Event
 

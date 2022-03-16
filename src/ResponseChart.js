@@ -10,10 +10,13 @@ function ResponseChart(props) {
     let radio = [0,0,0,0,0];
 
     //체크 개수
-    let check = [0,0,0,0];
+    let check = [0,0,0,0,0];
 
-    //퍼센트지
+    //라디오 퍼센트지
     let radioPercent = [0,0,0,0,0]
+
+    //체크박스 퍼센트지
+    let checkPercent = [0,0,0,0,0]
 
     let surveyData = survey.payload;
 
@@ -21,14 +24,7 @@ function ResponseChart(props) {
 
     let state = useSelector((state) => state.surveyReducer);
 
-    // console.log(radio);
-
-    // console.log(typeof(state.payload[102].value["1"][0]));
-
-    // if(state.payload[102].value["1"] == null) {
-    //     console.log(true)
-    // }
-
+    //라디오 항목 갯수
     function countRadio() {
         for(let i=0; i<state.payload.length; i++) {
             //value가 비어져 있을때
@@ -38,15 +34,15 @@ function ResponseChart(props) {
             // value가 string형태 일때
             else if(typeof(state.payload[i].value["1"][0]) == 'string') {
                 let num = Number(state.payload[i].value["1"][0]) 
-                radioPercent[num] += 1
+                radio[num] += 1
             }
-            // 라디오 배열 크기보다 클때
-            else if(state.payload[i].value["1"][0] >= radioPercent.length) {
+            // 라디오 배열 null 일때
+            else if(state.payload[i].value["1"][0] == null) {
                 continue
             }
             // 나머지
             else {
-                radioPercent[ state.payload[i].value["1"][0] ] += 1
+                radio[ state.payload[i].value["1"][0] ] += 1
             }
         }
     }
@@ -56,25 +52,66 @@ function ResponseChart(props) {
     console.log(radio)
 
 
+    //체크박스 항목 갯수 
+    function countCheck() {
+        for(let i=0; i<state.payload.length; i++) {
+            //value가 비어져 있을때
+            if(state.payload[i].value["2"] == null) {
+                continue
+            }
+            // 체크 배열 크기보다 클때
+            else if(state.payload[i].value["2"].length > checkPercent.length) {
+                console.log(state.payload[i].value["2"])
+                continue
+            }
+            else {
+                count(state.payload[i].value["2"])
+            }
+        }
+    }
+
+    countCheck();
+
+    //value["2"] 배열 갯수
+    function count(item) {
+        for(let i=0; i<item.length; i++) {
+            // value가 string형태 일때
+            if(typeof(item[i]) == 'string') {
+                let num = Number(item[i]) 
+                check[num] += 1
+            }
+            // 나머지
+            else {
+                check[ item[i] ] += 1
+            }
+        }
+    }
+
+    console.log(check)
+
+
     // 퍼센트 구하는 함수
-    function PerChange(item) {
+    function PerChange(item, item2) {
 
         let count = 0;
 
-        for(let i=0; i<(item.length - 1); i++) {
+        for(let i=0; i<(item.length); i++) {
             count += item[i]
             console.log(item[i])
         }
 
         for(let i=0; i<item.length; i++) {
-            item[i] = (item[i]/count) * 100
+            item2[i] = (item[i]/count) * 100
         }
 
-        console.log(radioPercent)
+        console.log(item2)
     }
 
     //라디오 퍼센트 
-    PerChange(radioPercent)
+    PerChange(radio, radioPercent)
+
+    //체크박스 퍼센트 
+    PerChange(check, checkPercent)
 
 
     //소수점 첫번째로 변환 + number타입으로 변환
@@ -88,6 +125,8 @@ function ResponseChart(props) {
     }
 
     toFix(radioPercent)
+
+    toFix(checkPercent)
 
 
 
@@ -115,7 +154,7 @@ function ResponseChart(props) {
                                             {
                                                 item.option.items.map((item, i)=>{
                                                     return(
-                                                        <Radio props={item} i={i} radioPercent={radioPercent}/>
+                                                        <Radio props={item} radioPercent={radioPercent[i]} radio={radio[i]}/>
                                                     )
                                                 })
                                             }
@@ -124,9 +163,9 @@ function ResponseChart(props) {
                                     :   <div className='colum'>
                                             <h2>{item.option.title}</h2>
                                             {
-                                                item.option.items.map((item)=>{
+                                                item.option.items.map((item, i)=>{
                                                     return(
-                                                        <Checkbox props={item}/>
+                                                        <Checkbox props={item} checkPercent={checkPercent[i]} check={check[i]}/>
                                                     )
                                                 })
                                             }
@@ -150,17 +189,18 @@ function Radio(props) {
 
     let quest = props.props
 
-    console.log(props.i)
-
     let chart2 = {
-        width: `${props.radioPercent[props.i]}%`
+        width: `${props.radioPercent}%`
     }
 
     return (
-        <div className='chart low'>
-            <p>{props.radioPercent[props.i]}</p>
+        <div className='chart'>
             <div className='chart2' style={chart2}>
+            </div>
+            <div className='chart2Box'>
+                <p>{props.radioPercent}</p>
                 <p>{quest}</p>
+                <p>{props.radio}</p>
             </div>
         </div>
     )
@@ -170,11 +210,20 @@ function Radio(props) {
 function Checkbox(props) {
 
     let quest = props.props
-    console.log(quest)
+
+    let chart2 = {
+        width: `${props.checkPercent}%`
+    }
+
+    
     return (
         <div className='chart'>
-            <div className='chart2'>
+            <div className='chart2' style={chart2}>
+            </div>
+            <div className='chart2Box'>
+                <p>{props.checkPercent}</p>
                 <h2>{quest}</h2>
+                <p>{props.check}</p>
             </div>
         </div>
         )
