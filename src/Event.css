@@ -12,8 +12,8 @@
 }
 
 .eventContainer {
-    width: 100%;
     justify-content: center;
+    margin: 10px;
 }
 
 .subBtn {
@@ -30,6 +30,6 @@
     border: 10px solid #3887ff;
 }
 
-input {
+/* input {
     visibility: hidden;
-}
+} */

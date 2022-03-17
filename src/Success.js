@@ -1,15 +1,17 @@
 import React from 'react';
-import Survey from './survey';
+import { useSelector } from 'react-redux';
 
 function Success() {
-    
-    console.log(Survey)
 
-    const survey = Survey.payload.blocks
+    const state = useSelector((state)=>state)
 
-    const surveyData = survey[survey.length -1]
+    // 설문조사 리스트의 블럭들
+    let survey= state.surveyReducer.payload.blocks
 
-    console.log(surveyData)
+    // 설문조사 리스트 블럭 배열 마지막
+    const surveyData = survey[survey.length - 1]
+
+    console.log(state)
 
     const colum = {
         width: `${surveyData.option.width}%`,
@@ -30,15 +32,17 @@ function Success() {
     }
 
   return (
-    <div style={colum}>
+
         <div style={colum}>
-            <h1>{ surveyData.option.submitMsg }</h1>
-            <img src={ surveyData.option.btnImg }/>
-            <button style={btn} onClick={()=>{
-                window.location.href = "/chart"
-            }}>응답자 통계 보기</button>
+            <div style={colum}>
+                <h1>{ surveyData.option.submitMsg }</h1>
+                <img src={ surveyData.option.btnImg }/>
+                <button style={btn} onClick={()=>{
+                    window.location.href = "/chart"
+                }}>응답자 통계 보기</button>
+            </div>
         </div>
-    </div>
+
   )
 }
 

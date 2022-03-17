@@ -3,6 +3,7 @@ import Qustion from './Component/Qustion';
 import Survey from './survey';
 import './Event.css';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 
 function Event(props) {
 
@@ -12,11 +13,11 @@ function Event(props) {
     let dispatch = useDispatch();
 
     //설문 데이터
-    const surveyData = Survey
+    const surveyData = state.surveyReducer
     
 
   return (
-    <div className='surveyContainer'>
+    <div className='surveyContainer colum'>
         <div className='surveyTitle'>
             <h1>{surveyData.payload.title}</h1>
             <img src={surveyData.payload.header_img}/>
@@ -38,13 +39,33 @@ function Event(props) {
             })
         }
         <button type='submit' onClick={()=>{
+
+            const data = async ()=>{
+                const result = await axios.post("http://event.conexuslab.co.kr/survey/1/answers", {
+                    user_id: "",
+                    value: state
+                })
+                .then((result)=>{console.log(result)})
+                .catch((Error)=>{console.log(Error)})
+            }
+              
+            data()
+
+            dispatch({ 
+                type: "설문완료", 
+                payload : { user_id : "한규석",
+                            value: {"1": state.radioReducer,
+                                    "2": state.checkReducer} } })
+
+            window.localStorage.setItem("radio", state.radioReducer);
             let copy = [...state.checkReducer]
             console.log("보내기 버튼 : ", state)
-            window.localStorage.setItem("radio", state.radioReducer);
             for(let i=0; i<copy.length; i++) {
                 window.localStorage.setItem(`check${i}`,  copy[i]);
             }
+
             window.location.href = "/success"
+            
         }} className="subBtn">보내기</button>
     </div>
   )

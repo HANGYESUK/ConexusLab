@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path='/' element={<Event/>}/>
+        <Route path='/' element={<Event />}/>
         <Route path='/chart' element={<ResponseChart/>}/>
         <Route path='/success' element={<Success/>}/>
       </Routes>

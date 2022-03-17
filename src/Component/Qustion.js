@@ -26,14 +26,11 @@ function Radio(props) {
 
     let state = useSelector((state) => state.radioReducer);
 
-    console.log(state)
-
     let dispatch = useDispatch();
 
     //라디오버튼 체크 여부 확인
     function checked() {
         let check = document.querySelectorAll('input[name="radio"]')
-        console.log(check[0])
         for(let i=0; i<check.length; i++) {
             if(check[i].checked == true) {
                 check[i].parentElement.classList.add('checked')
@@ -52,10 +49,11 @@ function Radio(props) {
                     return (
                         <label>
                             <div className='radioContainer low'>
-                                <input type="radio" key={i} value={item} name="radio" onChange={
+                                <input type="radio" name="radio" id={i} value={item} onChange={
                                     (e)=>{ 
-                                        dispatch({type : "라디오 추가", isradio : e.target.value})
+                                        console.log(e.target.id)
                                         checked()
+                                        dispatch({type : "라디오 추가", isradio : e.target.id})
                                     }
                                 }></input>
                                 {item}
@@ -71,6 +69,7 @@ function Radio(props) {
 //체크박스 컴포넌트
 function Checkbox(props) {
 
+    //체크박스 체크배열 상태
     let state = useSelector((state) => state.checkReducer);
 
     let dispatch = useDispatch();
@@ -80,7 +79,8 @@ function Checkbox(props) {
 
     const checkHandler = (e)=>{
         setIscheck(!ischeck);
-        checkItemHandler(e.value, e.checked)
+        console.log(e.name)
+        checkItemHandler(e.name, e.checked)
     }
 
     const checkItemHandler = (value, ischeck)=>{
@@ -96,16 +96,16 @@ function Checkbox(props) {
         }
     }
 
-    console.log(checkedItems)
 
     return(
         props.qustion.items.map((item, i)=>{
             return (
                 <label>
                     <div className='checkContainer low'>
-                        <input type="checkbox" key={i} value={item} onChange={
+                        <input type="checkbox" name={i} value={item} onChange={
                             (e)=>{
-                                checkHandler(e.currentTarget)
+                                checkHandler(e.target)
+                                // 체크배열 상태를 redux 로 보냄
                                 dispatch({type : "체크추가", checkedItems : checkedItems})
                                 console.log("체크추가 : ", state)
                                 e.currentTarget.parentElement.classList.toggle('checked')

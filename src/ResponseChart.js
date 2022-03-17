@@ -5,11 +5,33 @@ import './ResponseChart.css';
 
 function ResponseChart(props) {
 
+    const localStorage = window.localStorage
+
+    // 로컬스토리지 라디오 값
+    const localRadio = localStorage.getItem("radio")
+
+    // 로컬스토리지 체크 값   
+    const localCheck = [];
+    for(let i=0; i<localStorage.length - 1; i++) {
+        localCheck[i] = localStorage.getItem(`check${i}`)
+    }
+
+    console.log(localCheck)
+
+    // 리덕스
+    let state = useSelector((state) => state);
+
     // 설문조사 리스트 데이터
-    let surveyData = survey.payload;
+    let surveyData = state.surveyReducer.payload;
 
     // 설문조사 완료 데이터
-    let state = useSelector((state) => state.surveyReducer);
+    let surveyResult = state.surveyResultReducer;
+
+    surveyResult.payload.push({value: { "1": [localRadio], "2": localCheck }})
+
+    console.log(surveyData)
+    console.log(surveyResult)
+
 
 
     //라디오 개수
@@ -43,23 +65,23 @@ function ResponseChart(props) {
 
     //라디오 항목 갯수
     function countRadio() {
-        for(let i=0; i<state.payload.length; i++) {
+        for(let i=0; i<surveyResult.payload.length; i++) {
             //value가 비어져 있을때
-            if(state.payload[i].value["1"] == null) {
+            if(surveyResult.payload[i].value["1"] == null) {
                 continue
             }
             // value가 string형태 일때
-            else if(typeof(state.payload[i].value["1"][0]) == 'string') {
-                let num = Number(state.payload[i].value["1"][0]) 
+            else if(typeof(surveyResult.payload[i].value["1"][0]) == 'string') {
+                let num = Number(surveyResult.payload[i].value["1"][0]) 
                 radio[num] += 1
             }
             // 라디오 배열 null 일때
-            else if(state.payload[i].value["1"][0] == null) {
+            else if(surveyResult.payload[i].value["1"][0] == null) {
                 continue
             }
             // 나머지
             else {
-                radio[ state.payload[i].value["1"][0] ] += 1
+                radio[ surveyResult.payload[i].value["1"][0] ] += 1
             }
         }
     }
@@ -71,18 +93,18 @@ function ResponseChart(props) {
 
     //체크박스 항목 갯수 
     function countCheck() {
-        for(let i=0; i<state.payload.length; i++) {
+        for(let i=0; i<surveyResult.payload.length; i++) {
             //value가 비어져 있을때
-            if(state.payload[i].value["2"] == null) {
+            if(surveyResult.payload[i].value["2"] == null) {
                 continue
             }
             // 체크 배열 크기보다 클때
-            else if(state.payload[i].value["2"].length > checkPercent.length) {
-                console.log(state.payload[i].value["2"])
+            else if(surveyResult.payload[i].value["2"].length > checkPercent.length) {
+                console.log(surveyResult.payload[i].value["2"])
                 continue
             }
             else {
-                count(state.payload[i].value["2"])
+                count(surveyResult.payload[i].value["2"])
             }
         }
     }
@@ -94,6 +116,7 @@ function ResponseChart(props) {
         for(let i=0; i<item.length; i++) {
             // value가 string형태 일때
             if(typeof(item[i]) == 'string') {
+                console.log(item[i])
                 let num = Number(item[i]) 
                 check[num] += 1
             }
