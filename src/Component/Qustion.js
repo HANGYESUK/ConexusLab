@@ -53,7 +53,7 @@ function Radio(props) {
                                     (e)=>{ 
                                         console.log(e.target.id)
                                         checked()
-                                        dispatch({type : "라디오 추가", isradio : e.target.id})
+                                        dispatch({type : "라디오추가", isradio : e.target.id})
                                     }
                                 }></input>
                                 {item}

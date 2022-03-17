@@ -14,6 +14,36 @@ function Event(props) {
 
     //설문 데이터
     const surveyData = state.surveyReducer
+
+    //라디오, 체크박스 null체크 함수
+    function nullCheck(radio, check) {
+        if(radio.length == 0) {
+            if(check.length == 0) {
+                return null;
+            }
+            else {            
+                let copy = [...check]
+                for(let i=0; i<copy.length; i++) {
+                    window.localStorage.setItem(`check${i}`,  copy[i]);
+                }
+            }
+        }
+        else {
+            if(check.length == 0) {
+                window.localStorage.setItem("radio", radio);
+            }
+            else {
+                let copy = [...check]
+                for(let i=0; i<copy.length; i++) {
+                    window.localStorage.setItem(`check${i}`,  copy[i]);
+                }
+                window.localStorage.setItem("radio", radio);
+            }
+        }
+        
+    }
+
+
     
 
   return (
@@ -56,13 +86,10 @@ function Event(props) {
                 payload : { user_id : "한규석",
                             value: {"1": state.radioReducer,
                                     "2": state.checkReducer} } })
+                                
+            nullCheck(state.radioReducer, state.checkReducer)
 
-            window.localStorage.setItem("radio", state.radioReducer);
-            let copy = [...state.checkReducer]
-            console.log("보내기 버튼 : ", state)
-            for(let i=0; i<copy.length; i++) {
-                window.localStorage.setItem(`check${i}`,  copy[i]);
-            }
+            console.log(state)
 
             window.location.href = "/success"
             

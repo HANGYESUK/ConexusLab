@@ -8,15 +8,30 @@ function ResponseChart(props) {
     const localStorage = window.localStorage
 
     // 로컬스토리지 라디오 값
-    const localRadio = localStorage.getItem("radio")
+    let localRadio = [];
 
     // 로컬스토리지 체크 값   
-    const localCheck = [];
-    for(let i=0; i<localStorage.length - 1; i++) {
-        localCheck[i] = localStorage.getItem(`check${i}`)
+    let localCheck = [];
+    
+    // 로컬스토리지 null체크 함수
+    function nullCheck(item) {
+        if(item.length == 0) {
+            console.log(localStorage)
+            return 0;
+        }
+        else {
+            localRadio = item.getItem("radio")
+
+            for(let i=0; i<item.length - 1; i++) {
+                localCheck[i] = item.getItem(`check${i}`)
+            }
+
+            surveyResult.payload.push({value: { "1": [localRadio], "2": localCheck }})
+        }
     }
 
-    console.log(localCheck)
+    nullCheck(localStorage)
+
 
     // 리덕스
     let state = useSelector((state) => state);
@@ -26,8 +41,6 @@ function ResponseChart(props) {
 
     // 설문조사 완료 데이터
     let surveyResult = state.surveyResultReducer;
-
-    surveyResult.payload.push({value: { "1": [localRadio], "2": localCheck }})
 
     console.log(surveyData)
     console.log(surveyResult)
@@ -116,7 +129,6 @@ function ResponseChart(props) {
         for(let i=0; i<item.length; i++) {
             // value가 string형태 일때
             if(typeof(item[i]) == 'string') {
-                console.log(item[i])
                 let num = Number(item[i]) 
                 check[num] += 1
             }
@@ -137,14 +149,12 @@ function ResponseChart(props) {
 
         for(let i=0; i<(item.length); i++) {
             count += item[i]
-            console.log(item[i])
         }
 
         for(let i=0; i<item.length; i++) {
             item2[i] = (item[i]/count) * 100
         }
 
-        console.log(item2)
     }
 
     //라디오 퍼센트 

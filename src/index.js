@@ -37,10 +37,17 @@ function radioReducer(state=isradio, action) {
 
   let Copy = state
 
-  if(action.type === "라디오 추가") {
-    Copy[0] = action.isradio
-    console.log(Copy)
-    return Copy 
+  if(action.type === "라디오추가") {
+    console.log(action.isradio)
+    if(action.isradio == null)
+    {
+      return Copy 
+    }
+    else{
+      Copy[0] = action.isradio
+      return Copy
+    }
+
   }
   else {
     return Copy 
