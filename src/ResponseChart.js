@@ -5,6 +5,19 @@ import './ResponseChart.css';
 
 function ResponseChart(props) {
 
+
+    // 리덕스
+    let state = useSelector((state) => state);
+
+    // 설문조사 리스트 데이터
+    let surveyData = state.surveyReducer.payload;
+
+    // 설문조사 완료 데이터
+    let surveyResult = state.surveyResultReducer;
+
+    console.log(surveyData)
+    console.log(surveyResult)
+
     const localStorage = window.localStorage
 
     // 로컬스토리지 라디오 값
@@ -31,19 +44,6 @@ function ResponseChart(props) {
     }
 
     nullCheck(localStorage)
-
-
-    // 리덕스
-    let state = useSelector((state) => state);
-
-    // 설문조사 리스트 데이터
-    let surveyData = state.surveyReducer.payload;
-
-    // 설문조사 완료 데이터
-    let surveyResult = state.surveyResultReducer;
-
-    console.log(surveyData)
-    console.log(surveyResult)
 
 
 
