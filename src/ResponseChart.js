@@ -191,9 +191,9 @@ function ResponseChart(props) {
         <h1>차트</h1>
 
         {
-            surveyData.blocks.map((item, key)=>{
+            surveyData.blocks.map((item, i)=>{
                 return( 
-                    <div className='low'>
+                    <div className='low' key={i}>
                         {
                             item.option.items != null
                             
@@ -204,7 +204,7 @@ function ResponseChart(props) {
                                             {
                                                 item.option.items.map((item, i)=>{
                                                     return(
-                                                        <Radio props={item} radioPercent={radioPercent[i]} radio={radio[i]}/>
+                                                        <Radio props={item} radioPercent={radioPercent[i]} radio={radio[i]} key={i}/>
                                                     )
                                                 })
                                             }
@@ -215,7 +215,7 @@ function ResponseChart(props) {
                                             {
                                                 item.option.items.map((item, i)=>{
                                                     return(
-                                                        <Checkbox props={item} checkPercent={checkPercent[i]} check={check[i]}/>
+                                                        <Checkbox props={item} checkPercent={checkPercent[i]} check={check[i]} key={i}/>
                                                     )
                                                 })
                                             }

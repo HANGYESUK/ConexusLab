@@ -53,12 +53,12 @@ function Event(props) {
             <img src={surveyData.payload.header_img}/>
         </div>
         {
-            surveyData.payload.blocks.map((item, key)=>{
+            surveyData.payload.blocks.map((item, i)=>{
                 return( 
-                    <div>
+                    <div key={i}>
                         {
                             item.option.items != null
-                            ?  <div className='eventContainer colum' key={key}>
+                            ?  <div className='eventContainer colum'>
                                     <h3>{item.option.title}</h3>
                                     <Qustion props={item.option}/>
                                </div>

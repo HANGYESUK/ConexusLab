@@ -47,7 +47,7 @@ function Radio(props) {
             {
                 props.qustion.items.map((item, i)=>{
                     return (
-                        <label>
+                        <label key={i}>
                             <div className='radioContainer low'>
                                 <input type="radio" name="radio" id={i} value={item} onChange={
                                     (e)=>{ 
@@ -100,7 +100,7 @@ function Checkbox(props) {
     return(
         props.qustion.items.map((item, i)=>{
             return (
-                <label>
+                <label key={i}>
                     <div className='checkContainer low'>
                         <input type="checkbox" name={i} value={item} onChange={
                             (e)=>{
